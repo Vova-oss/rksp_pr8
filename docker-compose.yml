@@ -1,0 +1,70 @@
+version: '3.1'
+services:
+
+  eureka-server:
+    container_name: eureka-server
+    image: pr8_eureka-server
+    build: ./eureka-server/
+    ports:
+      - "8761:8761"
+    environment:
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://eureka-server:8761/eureka
+
+  car-client:
+    container_name: car-client
+    image: pr8_car-client
+    build: ./car-client/
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dbcar:5432/postgres
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      - dbcar
+
+  people-client:
+    container_name: people-client
+    image: pr8_people-client
+    build: ./people-client/
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dbpeople:5432/postgres
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      - dbpeople
+
+  dbpeople:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+
+  dbcar:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+
+  feign-client:
+    container_name: feign-client
+    image: pr8_feign-client
+    build: ./feign-client/
+    environment:
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+
+  api-gateway:
+    container_name: api-gateway
+    image: pr8_api-gateway
+    build: ./api-gateway/
+    ports:
+      - "8765:8765"
+    environment:
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      - feign-client
+      - car-client
+      - people-client
