@@ -1,0 +1,5 @@
+com\example\peopleclient\entity\People.class
+com\example\peopleclient\service\PeopleService.class
+com\example\peopleclient\PeopleClientApplication.class
+com\example\peopleclient\controller\PeopleController.class
+com\example\peopleclient\repository\PeopleRepository.class

@@ -1,0 +1,6 @@
+com\example\carclient\controller\CarController.class
+com\example\carclient\service\CarService.class
+com\example\carclient\CarClientApplication.class
+com\example\carclient\entity\Car.class
+com\example\carclient\controller\TestController.class
+com\example\carclient\repository\CarRepository.class

@@ -1,0 +1,7 @@
+com\example\feignclient\entity\Car.class
+com\example\feignclient\service\FeignServiceForCar.class
+com\example\feignclient\service\FeignServiceForPeople.class
+com\example\feignclient\controller\FeignController.class
+com\example\feignclient\FeignClientApplication.class
+com\example\feignclient\entity\People.class
+com\example\feignclient\entity\MainEnt.class
